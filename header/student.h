@@ -1,12 +1,13 @@
 #ifndef STUDENT_H_
 #define STUDENT_H_
 
-typedef struct StudentData // structure definition for student marks
+// structure definition of Student Data
+typedef struct StudentData 
 {
-    char student_index[20];
-    float assignmt01_marks;
-    float assignmt02_marks;
-    float project_marks;
-    float finalExam_marks;
+    char studentIndex[20];
+    float assignmt1Marks;
+    float assignmt2Marks;
+    float projectMmarks;
+    float finalExamMarks;
 } StudentData;
 #endif
