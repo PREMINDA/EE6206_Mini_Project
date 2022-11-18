@@ -1,7 +1,8 @@
-#include "header/student.h"
+#include <stdio.h>
+#include "header/action.h"
 
 int main(int argc, char const *argv[])
 {
-    /* code */
+    createStudentRecrod();
     return 0;
 }
