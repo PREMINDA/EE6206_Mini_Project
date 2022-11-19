@@ -46,3 +46,45 @@ void writeStudentRecord(StudentData student){
     // close file
     fclose(file); 
 }
+
+void readAllRecords(){
+    StudentData student;
+    FILE *file;
+    int errNo;
+
+    file = fopen("student_marks.dat", "r"); // open file for writing and reading
+    if (file == NULL)
+    {
+        perror("doc1.txt: ");
+        printf("Error No %d\n", errno);
+        exit(1);
+    }
+
+    while (1) // read each record from file with error handling
+    {
+
+        fread(&student, sizeof(StudentData), 1, file);
+        if (feof(file))
+        {
+            break;
+        }
+        if ((errNo = ferror(file)) > 0)
+        {
+            perror("fread dox1.txt: ");
+            printf("ferror: %d\n", errNo);
+            exit(1);
+        }
+        else
+        {
+            printf("| %-20s | %-20.2f | %-20.2f | %-20.2f | %-20.2f  | \n", student.studentIndex, student.assignmt1Marks,
+                   student.assignmt2Marks, student.projectMmarks, student.finalExamMarks); // print record
+            printSeperationLine();
+        }
+    }
+    printf("\n\n");
+    fclose(file);
+}
+
+void printSeperationLine(){
+    printf("_____________________________________________________________________________________________________________________\n");
+}
