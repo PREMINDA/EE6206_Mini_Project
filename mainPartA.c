@@ -24,6 +24,10 @@ int main(int argc, char const *argv[])
             generateRecodes();
             break;
         case 4:
+            printSeperationLine();
+            updateRecode();
+            break;
+        case 5:
             exit(0);
             break;
         }

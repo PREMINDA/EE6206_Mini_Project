@@ -5,11 +5,13 @@
 #include <stdlib.h> // for exit function
 #include <string.h> // for manipulating arrays of characters.
 #include <errno.h>  // for error handling
+#include <stdbool.h>  
 #include "student.h"
 
 void createStudentRecrod(void);
 void readAllRecords(void);
 void printSeperationLine(void);
 void generateRecodes();
+void updateRecode();
 
 #endif

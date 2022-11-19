@@ -48,13 +48,15 @@ void writeStudentRecord(student_marks student){
     fclose(file); 
 }
 
+//read all recodes from file
 void readAllRecords(){
     printSeperationLine();
     student_marks student;
     FILE *file;
     int errNo;
 
-    file = fopen("student_marks.dat", "r"); // open file for writing and reading
+    //open file with read option
+    file = fopen("student_marks.dat", "r");
     if (file == NULL)
     {
         perror("doc1.txt: ");
@@ -62,9 +64,9 @@ void readAllRecords(){
         exit(1);
     }
 
-    while (1) // read each record from file with error handling
+    while (1)
     {
-
+        //read one data from file 
         fread(&student, sizeof(student_marks), 1, file);
         if (feof(file))
         {
@@ -83,10 +85,86 @@ void readAllRecords(){
             printSeperationLine();
         }
     }
-    printf("\n\n");
+    printf("\n");
     fclose(file);
 }
 
+//get record count
+
+
+void updateRecode(){
+
+    student_marks student;
+    FILE *file;
+    int errNo;
+    // get the number of records in the file
+    char student_index[20];
+    printf("Enter student index number: ");
+    scanf("%s", student_index); // get the student index number to update
+    student_marks output;
+    student_marks updatedRecord;
+
+
+    //open file with read option
+    file = fopen("student_marks.dat", "r+");
+    if (file == NULL)
+    {
+        perror("doc1.txt: ");
+        printf("Error No %d\n", errno);
+        exit(1);
+    }
+
+    while (1)
+    {
+        //read one data from file 
+        fread(&student, sizeof(student_marks), 1, file);
+        if (feof(file))
+        {
+            printf("No recode to found\n");
+            break;
+        }
+        if ((errNo = ferror(file)) > 0)
+        {
+            perror("fread dox1.txt: ");
+            printf("ferror: %d\n", errNo);
+            exit(1);
+        }
+        else
+        {
+            //find student and update data
+            if(strcmp(student.student_index,student_index) == 0){
+                fseek(file,-sizeof(student_marks),SEEK_CUR);
+
+                printf("Enter assignment 01 marks : ");
+                scanf("%f", &student.assignmt01_marks);
+                printf("Enter assignment 02 marks : ");
+                scanf("%f", &student.assignmt02_marks);
+                printf("Enter project marks : ");
+                scanf("%f", &student.project_marks);
+                printf("Enter finals marks : ");
+                scanf("%f", &student.finalExam_marks);
+
+                // write one student data to file
+                int wrtRe = fwrite(&student, sizeof(student_marks), 1, file); 
+
+                // check for error in write to file
+                if (wrtRe < 0) 
+                {
+                    printf("Error No: %d\n", errno);
+                    perror("fwrite Error: ");
+                    exit(1);
+                }
+                printf("Update Sucessfully\n");
+                break;
+
+            }
+        }
+    }
+    printf("\n");
+    fclose(file);
+}
+
+//Generate random recodes
 void generateRecodes()
 {
     student_marks studentData;
@@ -96,7 +174,6 @@ void generateRecodes()
        char indexNumber[20];
        randomIndex(indexNumber);
        indexNumber[strlen(indexNumber)]='\0';
-        // generate random data for each record
         strcpy(studentData.student_index, indexNumber);
         studentData.assignmt01_marks = randomMarks();
         studentData.assignmt02_marks = randomMarks();
