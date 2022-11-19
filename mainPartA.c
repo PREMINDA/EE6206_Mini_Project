@@ -6,7 +6,8 @@ int main(int argc, char const *argv[])
     int choice;
     
      do{
-        printf("Enter Your Choice \n");
+        printSeperationLine();
+        printf("Enter Your Choice : ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -16,10 +17,13 @@ int main(int argc, char const *argv[])
             createStudentRecrod();
             break;
         case 2:
-            printSeperationLine();
             readAllRecords();
             break;
         case 3:
+            printSeperationLine();
+            generateRecodes();
+            break;
+        case 4:
             exit(0);
             break;
         }
