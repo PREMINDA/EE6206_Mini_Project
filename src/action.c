@@ -4,7 +4,7 @@
 void writeStudentRecord(student_marks student);
 
 //Creating a student mark recode
-void createStudentRecrod(){
+void createStudentRecord(){
     student_marks data;
 
     printf("Enter student index : ");
@@ -92,7 +92,7 @@ void readAllRecords(){
 //get record count
 
 
-void updateRecode(){
+void updateRecord(){
 
     student_marks student;
     FILE *file;
@@ -101,8 +101,6 @@ void updateRecode(){
     char student_index[20];
     printf("Enter student index number: ");
     scanf("%s", student_index); // get the student index number to update
-    student_marks output;
-    student_marks updatedRecord;
 
 
     //open file with read option
@@ -120,7 +118,7 @@ void updateRecode(){
         fread(&student, sizeof(student_marks), 1, file);
         if (feof(file))
         {
-            printf("No recode to found\n");
+            printf("No record to update\n");
             break;
         }
         if ((errNo = ferror(file)) > 0)
@@ -133,6 +131,7 @@ void updateRecode(){
         {
             //find student and update data
             if(strcmp(student.student_index,student_index) == 0){
+                //move to student found position
                 fseek(file,-sizeof(student_marks),SEEK_CUR);
 
                 printf("Enter assignment 01 marks : ");
@@ -154,7 +153,7 @@ void updateRecode(){
                     perror("fwrite Error: ");
                     exit(1);
                 }
-                printf("Update Sucessfully\n");
+                printf("Update Successfully\n");
                 break;
 
             }
@@ -164,8 +163,100 @@ void updateRecode(){
     fclose(file);
 }
 
-//Generate random recodes
-void generateRecodes()
+//delete record from file
+void deleteRecord(){
+
+    student_marks student;
+    FILE *file1,*file2;
+    int errNo;
+    char student_index[20];
+    //read student index number
+    printf("Enter student index number: ");
+    scanf("%s", student_index);
+    bool isFound = false;
+
+    //open file with read option
+    file1 = fopen("student_marks.dat", "r+");
+    file2 = fopen("cpy.dat","a+");
+    if (file1 == NULL)
+    {
+        perror("student_marks.dat: ");
+        printf("Error No %d\n", errno);
+        exit(1);
+    }
+    if (file2 == NULL)
+    {
+        perror("cpy.dat: ");
+        printf("Error No %d\n", errno);
+        exit(1);
+    }
+
+    while (1)
+    {
+        //read one data from file 
+        fread(&student, sizeof(student_marks), 1, file1);
+        if (feof(file1))
+        {
+            break;
+        }
+        if ((errNo = ferror(file1)) > 0)
+        {
+            perror("fread error: ");
+            printf("ferror: %d\n", errNo);
+            exit(1);
+        }
+        else
+        {
+            //find student and update data
+            if(strcmp(student.student_index,student_index) != 0){
+                // write one student data to file
+                int wrtRe = fwrite(&student, sizeof(student_marks), 1, file2); 
+                int result;
+
+                // wirte error handaling
+                if (wrtRe < 0) 
+                {
+                    printf("Error No: %d\n", errno);
+                    perror("fwrite Error: ");
+                    exit(1);
+                } 
+            }else{
+                isFound = true;
+            }
+        }
+    }
+    int result;
+    printf("\n");
+    fclose(file1);
+    fclose(file2);
+    
+    //remove error handaling
+    result = remove("student_marks.dat");
+    if (result != 0) {
+        printf("Error No: %d\n", errno);
+        perror("file remove Error: ");
+        exit(1);
+    }
+
+    //rename error handaling
+    result = rename("cpy.dat","student_marks.dat");
+    if (result != 0) {
+        printf("Error No: %d\n", errno);
+        perror("file rename Error: ");
+        exit(1);
+    }
+
+    if(isFound){
+        printf("Delete Successfully");
+    }else{
+        printf("No record to Delete");
+    }
+    
+    
+}
+
+//Generate random records
+void generateRecords()
 {
     student_marks studentData;
     int count = 0;

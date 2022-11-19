@@ -14,20 +14,24 @@ int main(int argc, char const *argv[])
         {
         case 1:
             printSeperationLine();
-            createStudentRecrod();
+            createStudentRecord();
             break;
         case 2:
             readAllRecords();
             break;
         case 3:
             printSeperationLine();
-            generateRecodes();
+            generateRecords();
             break;
         case 4:
             printSeperationLine();
-            updateRecode();
+            updateRecord();
             break;
         case 5:
+            printSeperationLine();
+            deleteRecord();
+            break;
+        case 6:
             exit(0);
             break;
         }

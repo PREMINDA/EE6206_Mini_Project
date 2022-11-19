@@ -8,10 +8,11 @@
 #include <stdbool.h>  
 #include "student.h"
 
-void createStudentRecrod(void);
+void createStudentRecord(void);
 void readAllRecords(void);
 void printSeperationLine(void);
-void generateRecodes();
-void updateRecode();
+void generateRecords();
+void updateRecord();
+void deleteRecord();
 
 #endif
