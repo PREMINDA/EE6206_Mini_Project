@@ -167,25 +167,11 @@ void deleteRecord(){
     
     //remove error handaling
     result = remove("student_marks.dat");
-    if (result != 0) {
-        printf("Error No: %d\n", errno);
-        perror("file remove Error: ");
-        exit(1);
-    }
+    
 
     //rename error handaling
     result = rename("cpy.dat","student_marks.dat");
-    if (result != 0) {
-        printf("Error No: %d\n", errno);
-        perror("file rename Error: ");
-        exit(1);
-    }
-
-    if(isFound){
-        printf("Delete Successfully\n");
-    }else{
-        printf("No record to Delete\n");
-    }
+   
     
 }
 
