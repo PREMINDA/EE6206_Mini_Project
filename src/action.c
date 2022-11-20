@@ -29,11 +29,12 @@ void writeStudentRecord(student_marks student){
     file = fopen("student_marks.dat", "a+"); 
     if (file == NULL)
     {
-        printf("Error opening file: %s\n", strerror(errno));
+        printf("Error opening file: %d\n",errno);
+        perror("fopen Error: \n");
         exit(1);
     }
 
-    // write one student data to file
+    // write student data to file
     int wrtRe = fwrite(&student, sizeof(student_marks), 1, file); 
 
     // check for error in write to file
@@ -54,6 +55,7 @@ void readAllRecords(){
     student_marks student;
     FILE *file;
     int errNo;
+    int count = 1;
 
     //open file with read option
     file = fopen("student_marks.dat", "r");
@@ -63,7 +65,6 @@ void readAllRecords(){
         printf("Error No %d\n", errno);
         exit(1);
     }
-
     while (1)
     {
         //read one data from file 
@@ -80,18 +81,19 @@ void readAllRecords(){
         }
         else
         {
-            printf("| %-20s | %-20.2f | %-20.2f | %-20.2f | %-20.2f  | \n", student.student_index, student.assignmt01_marks,
-                   student.assignmt02_marks, student.project_marks, student.finalExam_marks); // print record
+            //print records
+            printf("| %-4d | %-20s | %-20.2f | %-20.2f | %-20.2f | %-20.2f  | \n",count ,student.student_index, student.assignmt01_marks,
+                   student.assignmt02_marks, student.project_marks, student.finalExam_marks);
+            count++;
             printSeperationLine();
         }
     }
+    
     printf("\n");
     fclose(file);
 }
 
-//get record count
-
-
+//update recode
 void updateRecord(){
 
     student_marks student;
@@ -99,8 +101,9 @@ void updateRecord(){
     int errNo;
     // get the number of records in the file
     char student_index[20];
+    //get the index of the student to update
     printf("Enter student index number: ");
-    scanf("%s", student_index); // get the student index number to update
+    scanf("%s", student_index); 
 
 
     //open file with read option
@@ -175,7 +178,7 @@ void deleteRecord(){
     scanf("%s", student_index);
     bool isFound = false;
 
-    //open file with read option
+    //open file with read write options
     file1 = fopen("student_marks.dat", "r+");
     file2 = fopen("cpy.dat","a+");
     if (file1 == NULL)
@@ -193,7 +196,7 @@ void deleteRecord(){
 
     while (1)
     {
-        //read one data from file 
+        //read data from file 
         fread(&student, sizeof(student_marks), 1, file1);
         if (feof(file1))
         {
@@ -209,11 +212,11 @@ void deleteRecord(){
         {
             //find student and update data
             if(strcmp(student.student_index,student_index) != 0){
-                // write one student data to file
+                // write student data to file
                 int wrtRe = fwrite(&student, sizeof(student_marks), 1, file2); 
                 int result;
 
-                // wirte error handaling
+                // write error handaling
                 if (wrtRe < 0) 
                 {
                     printf("Error No: %d\n", errno);
@@ -247,11 +250,10 @@ void deleteRecord(){
     }
 
     if(isFound){
-        printf("Delete Successfully");
+        printf("Delete Successfully\n");
     }else{
-        printf("No record to Delete");
+        printf("No record to Delete\n");
     }
-    
     
 }
 
@@ -278,6 +280,6 @@ void generateRecords()
 }
 
 void printSeperationLine(){
-    printf("_____________________________________________________________________________________________________________________\n");
+    printf("----------------------------------------------------------------------------------------------------------------------------\n");
 }
 
