@@ -20,8 +20,8 @@ float getStudentData(dataType markstype);
 int main(int argc, char const *argv[])
 {
 
-    int studentCount = getStudenCount(COUNT);
-    float avg = getStudenCount(AVG);
+    int studentCount = getStudentData(COUNT);
+    float avg = getStudentData(AVG);
     printf("avg %f\n",avg/studentCount);
     return 0;
 }
@@ -62,17 +62,21 @@ float getStudentData(dataType datatype){
         {
             switch (datatype)
             {
+            //student count
             case COUNT:
                 retunValue++;
                 break;
+            //find minimum
             case MIN:
                 if(student.assignmt01_marks<min)min = student.assignmt01_marks;
                 retunValue = min;
                 break;
+            //find maximum
             case MAX:
                 if(student.assignmt01_marks>max)max = student.assignmt01_marks;
                 retunValue = max;
                 break;
+            //find avg
             case AVG:
                 avg += student.assignmt01_marks;
                 break;
