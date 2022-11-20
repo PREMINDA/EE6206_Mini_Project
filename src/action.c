@@ -25,7 +25,7 @@ void createStudentRecord(){
 void writeStudentRecord(student_marks student){
     FILE *file;
 
-    // open file with append option
+    // open file with read and append option
     file = fopen("student_marks.dat", "a+"); 
     if (file == NULL)
     {
@@ -37,7 +37,7 @@ void writeStudentRecord(student_marks student){
     // write student data to file
     int wrtRe = fwrite(&student, sizeof(student_marks), 1, file); 
 
-    // check for error in write to file
+    // check for error when write to file
     if (wrtRe < 0) 
     {
         printf("Error No: %d\n", errno);
@@ -58,6 +58,7 @@ void readAllRecords(){
     int count = 1;
 
     printSeperationLine();
+    //print table headers
     printf("| %-6s | %-20s | %-20s | %-20s | %-20s | %-20s  | \n","count" ,"Student Index", "Assignment 01",
                    "Assignment 02", "Project Marks", "Final Marks");
     printSeperationLine();
@@ -72,7 +73,7 @@ void readAllRecords(){
     }
     while (1)
     {
-        //read one data from file 
+        //read data from file one by by
         fread(&student, sizeof(student_marks), 1, file);
         if (feof(file))
         {
@@ -104,14 +105,13 @@ void updateRecord(){
     student_marks student;
     FILE *file;
     int errNo;
-    // get the number of records in the file
     char student_index[20];
     //get the index of the student to update
     printf("Enter student index number: ");
     scanf("%s", student_index); 
 
 
-    //open file with read option
+    //open file with read write option
     file = fopen("student_marks.dat", "r+");
     if (file == NULL)
     {
@@ -151,7 +151,7 @@ void updateRecord(){
                 printf("Enter finals marks : ");
                 scanf("%f", &student.finalExam_marks);
 
-                // write one student data to file
+                // write update student data to file
                 int wrtRe = fwrite(&student, sizeof(student_marks), 1, file); 
 
                 // check for error in write to file
@@ -185,6 +185,7 @@ void deleteRecord(){
 
     //open file with read write options
     file1 = fopen("student_marks.dat", "r+");
+    //open file with read and appending
     file2 = fopen("cpy.dat","a+");
     if (file1 == NULL)
     {
@@ -238,7 +239,7 @@ void deleteRecord(){
     fclose(file1);
     fclose(file2);
     
-    //remove error handaling
+    //file remove error handaling
     result = remove("student_marks.dat");
     if (result != 0) {
         printf("Error No: %d\n", errno);
@@ -246,7 +247,7 @@ void deleteRecord(){
         exit(1);
     }
 
-    //rename error handaling
+    //file rename error handaling
     result = rename("cpy.dat","student_marks.dat");
     if (result != 0) {
         printf("Error No: %d\n", errno);
