@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-float randomMarks();
+float randomMarks(int margin);
 void randomIndex(char indexNumber[20]);
 
 #endif

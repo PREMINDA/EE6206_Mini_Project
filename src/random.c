@@ -1,9 +1,10 @@
 #include "../header/random.h"
 
 //generate random marks
-float randomMarks()
+float randomMarks(int margin)
 {
-    return rand() % 100 + 1; 
+    float random = ((((float)(rand()%100))+1)/100)*(float)margin;
+    return random;
 }
 
 //generate random data
