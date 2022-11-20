@@ -57,6 +57,11 @@ void readAllRecords(){
     int errNo;
     int count = 1;
 
+    printSeperationLine();
+    printf("| %-6s | %-20s | %-20s | %-20s | %-20s | %-20s  | \n","count" ,"Student Index", "Assignment 01",
+                   "Assignment 02", "Project Marks", "Final Marks");
+    printSeperationLine();
+
     //open file with read option
     file = fopen("student_marks.dat", "r");
     if (file == NULL)
@@ -82,7 +87,7 @@ void readAllRecords(){
         else
         {
             //print records
-            printf("| %-4d | %-20s | %-20.2f | %-20.2f | %-20.2f | %-20.2f  | \n",count ,student.student_index, student.assignmt01_marks,
+            printf("| %-6d | %-20s | %-20.2f | %-20.2f | %-20.2f | %-20.2f  | \n",count ,student.student_index, student.assignmt01_marks,
                    student.assignmt02_marks, student.project_marks, student.finalExam_marks);
             count++;
             printSeperationLine();
@@ -280,6 +285,6 @@ void generateRecords()
 }
 
 void printSeperationLine(){
-    printf("----------------------------------------------------------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------------------------------------------------------------\n");
 }
 
