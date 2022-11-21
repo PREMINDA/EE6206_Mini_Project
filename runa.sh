@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc -o test PartA.c
-./test
+gcc -o partA PartA.c
+./partA
