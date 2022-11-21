@@ -1,2 +1,2 @@
-gcc -o test1 partB.c
-./test1
+gcc -o partB partB.c
+./partB
