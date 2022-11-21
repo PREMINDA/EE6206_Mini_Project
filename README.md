@@ -16,7 +16,7 @@ This is a project done for the 3rd year EE6206: Operating Systems Programming Mi
 ./runa.sh
 ```
 
-- (Use below command to run part b.)
+- (Use below command to run part B.)
 ```bash
 ./runb.sh
 ```
