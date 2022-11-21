@@ -17,6 +17,13 @@ typedef struct student_marks
 typedef enum summeryData{MIN,MAX,COUNT,AVG,LESS5}summeryData;
 
 float getStudentSummery(summeryData markstype);
+void printSeperationLine();
+void red ();
+void yellow();
+void reset ();
+void green ();
+void blue();
+void cyan();
 
 int main(int argc, char const *argv[])
 {
@@ -28,7 +35,7 @@ int main(int argc, char const *argv[])
     //get all student count
     int studentCount = getStudentSummery(COUNT);
 
-    //reate and cheack errors for file descriptors 1 2 and 3
+    //create and cheack errors for file descriptors 1 2 and 3
     if(pipe(file_des1)==-1){
         perror("pipe1 error: ");
         printf("Error No: %d\n",errno);
@@ -108,6 +115,7 @@ int main(int argc, char const *argv[])
                     close(file_des3[1]);
                 }else{
                     float minMarks,maxMarks,avgMarks;
+                    float in100 = 6.6666667;
                     int lessThan5;
 
                     //read data comes from pipes
@@ -139,8 +147,34 @@ int main(int argc, char const *argv[])
 
                     //get count less than 5%
                     lessThan5 = getStudentSummery(LESS5);
-
-                    printf("MIN marks = %.2f\nMAX marks =  %.2f\nAVG marks = %f\nCount less than 5%% = %d\n",minMarks,maxMarks,avgMarks,lessThan5);
+                    
+                    //printing summery 
+                    yellow();
+                    printSeperationLine();
+                    system("setterm -bold on");
+                    printf("Summury of assignment 01 marks\n");
+                    printSeperationLine();
+                    reset();
+                    printSeperationLine();
+                    red();
+                    printf("MIN marks = %.2f\n",minMarks);
+                    printf("MIN marks in %% = %.2f\n",minMarks*in100);
+                    reset();
+                    printSeperationLine();
+                    green();
+                    printf("MAX marks = %.2f\n",maxMarks);
+                    printf("MAX marks in %% = %.2f\n",maxMarks*in100);
+                    reset();
+                    printSeperationLine();
+                    blue();
+                    printf("AVG marks = %.2f\n",avgMarks);
+                    printf("AVG marks in %% = %.2f\n",avgMarks*in100);
+                    reset();
+                    printSeperationLine();
+                    cyan();
+                    printf("Student less than 5%% marks = %d\n",lessThan5);
+                    reset();
+                    printSeperationLine();
                 }
             }
         }
@@ -159,31 +193,24 @@ float getStudentSummery(summeryData datatype){
     float min = 100;
     float max = 0;
     float avg = 0;
-    if (file == NULL)
-    {
+    if (file == NULL){
         printf("Error opening file: %d\n",errno);
         perror("fopen Error: \n");
         exit(1);
     }
-
-    while (1)
-    {
+    while (1){
         //read data from file
         fread(&student, sizeof(student_marks), 1, file);
-        if (feof(file))
-        {
+        if (feof(file)){
             break;
         }
-        if ((errNo = ferror(file)) > 0)
-        {
+        if ((errNo = ferror(file)) > 0){
             perror("fread dox1.txt: ");
             printf("ferror: %d\n", errNo);
             exit(1);
         }
-        else
-        {
-            switch (datatype)
-            {
+        else{
+            switch (datatype){
             //student count
             case COUNT:
                 retunValue++;
@@ -210,11 +237,37 @@ float getStudentSummery(summeryData datatype){
             default:
                 break;
             }
-            
-            
         }
     }
     if(datatype == AVG)retunValue = avg;
     fclose(file);
     return retunValue;
+}
+
+void red () {
+  printf("\033[1;31m");
+}
+
+void yellow() {
+  printf("\033[1;33m");
+}
+
+void reset () {
+  printf("\033[0m");
+}
+
+void green () {
+  printf("\033[0;32m");
+}
+
+void blue () {
+  printf("\033[0;34m");
+}
+
+void cyan () {
+  printf("\033[0;36m");
+}
+
+void printSeperationLine(){
+    printf("-------------------------------\n");
 }
